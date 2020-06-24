@@ -109,7 +109,7 @@ class HTMLWindow {
 
 }
 
-window.onkeypress = function(e) {
+var checkCtrlQ = function(e) {
 
     if (event.ctrlKey && event.key == "q") {
 
@@ -118,3 +118,5 @@ window.onkeypress = function(e) {
     }
 
 }
+
+window.onkeypress = checkCtrlQ
