@@ -1,31 +1,39 @@
-# Proton JS - Proton.py
-# by Acropolis Point 
-
-# module imports
 import os
 import sys
-# import modules from bigger modules
+import json
+
+from gi.repository import GLib
 from gi.repository import Gtk, Gdk
 from gi.repository import WebKit2 as WebKit
 
-# set up file
 webview = WebKit.WebView()
-path = "start.html"
+path = sys.argv[5]
 path = os.path.realpath(path)
 webview.load_uri("file://" + path)
 
-# create a window
+scrolledWindow = Gtk.ScrolledWindow()
+scrolledWindow.add(webview)
+
 window = Gtk.Window()
-window.set_decorated(False)
-window.set_default_size(1, 1)
-window.add(webview)
+
+if (sys.argv[3] == "false"):
+    window.set_decorated(False)
+
+window.set_default_size(int(sys.argv[1]), int(sys.argv[2]))
+window.set_title(sys.argv[4])
+window.set_icon_from_file(sys.argv[6])
+window.add(scrolledWindow)
 window.show_all()
 
-# quit function
 def quit(args):
     Gtk.main_quit()
-    os.system("killall flask")
-
 window.connect("destroy", quit)
+
+def checkClose():
+    theFile = open("output.json", "r")
+    theFileParsed = json.load(theFile)
+    if (theFileParsed['close'] == sys.argv[4]):
+        Gtk.main_quit()
+GLib.timeout_add(100, checkClose)
 
 Gtk.main()
