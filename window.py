@@ -1,6 +1,8 @@
 import os
 import sys
+import json
 
+from gi.repository import GLib
 from gi.repository import Gtk, Gdk
 from gi.repository import WebKit2 as WebKit
 
@@ -25,7 +27,13 @@ window.show_all()
 
 def quit(args):
     Gtk.main_quit()
-    os.system("killall flask")
 window.connect("destroy", quit)
+
+def checkClose():
+    theFile = open("output.json", "r")
+    theFileParsed = json.load(theFile)
+    if (theFileParsed['close'] == sys.argv[4]):
+        Gtk.main_quit()
+GLib.timeout_add(100, checkClose)
 
 Gtk.main()

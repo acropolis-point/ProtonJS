@@ -12,9 +12,14 @@
 <body>
     <h1>Welcome to ProtonJS!</h1>
     <p>This is an example of a program. Take a look at the code! This is index.html, and it is being served by window.py.</p>
+    <p>I was made by start.html!</p>
     <p style="font-size: .7em;">Press
         <code style="background-color: #dadada; border-radius: 4px; padding: 5px;">ctrl + q</code> to quit the program.</p>
     <script src="commands.js"></script>
+    <script>
+        var file2 = new HTMLWindow("800", "500", "true", "ABCDEFG", "index2.html", "photo.png");
+        file2.save("hello", "abc.txt");
+    </script>
 </body>
 
 </html>

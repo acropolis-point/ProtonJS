@@ -19,71 +19,16 @@ class HTMLWindow {
             });
 
         }
-    }
-
-    close() {
-
-        this.shell("pkill " + this.title);
 
     }
 
-    save(content, file, operation) {
+    save(content, file) {
 
-        if (operation) {
-
-            switch (operation) {
-
-                case ("add"):
-                    fetch("http://127.0.0.1:5000/add", {
-
-                        method: 'POST',
-
-                        body: content + ", " + file
-
-                    });
-
-                case ("subtract"):
-                    fetch("http://127.0.0.1:5000/subtract", {
-
-                        method: 'POST',
-
-                        body: content + ", " + file
-
-                    });
-
-            }
-
-        } else {
-
-            fetch("http://127.0.0.1:5000/save", {
-
-                method: 'POST',
-
-                body: content + ", " + file
-
-            });
-
-        }
-
-    }
-
-    saveAs(content, promptText) {
-
-        if (promptText) {
-
-            this.file = prompt(promptText);
-
-        } else {
-
-            this.file = prompt("Filename");
-
-        }
-
-        fetch("http://127.0.0.1:5000/save", {
+        fetch("http://127.0.0.1:5000/filesave", {
 
             method: 'POST',
 
-            body: content + ", " + this.file
+            body: content + ", " + file
 
         });
 
@@ -101,8 +46,21 @@ class HTMLWindow {
 
     }
 
+    close() {
+
+        fetch("http://127.0.0.1:5000/close", {
+
+            method: 'POST',
+
+            body: this.title
+
+        });
+
+    }
+
     quit() {
 
+        this.shell("killall flask");
         this.shell("killall python3");
 
     }
